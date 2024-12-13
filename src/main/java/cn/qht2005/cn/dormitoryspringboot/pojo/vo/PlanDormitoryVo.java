@@ -12,6 +12,8 @@ public class PlanDormitoryVo {
 	private String dormitoryType;
 	// 班级名称
 	private String className;
+	// 床位数
+	private Integer bedAmount;
 	// 安排人数
 	private Integer planNumber;
 	// 选择人数

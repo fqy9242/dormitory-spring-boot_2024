@@ -17,7 +17,7 @@ public class DormitoryVo {
 	// 区域名称
 	private String areaName;
 	// 床位数
-	private Integer bedNumber;
+	private Integer bedAmount;
 }
 
 

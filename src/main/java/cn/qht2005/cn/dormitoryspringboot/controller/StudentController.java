@@ -1,15 +1,13 @@
 package cn.qht2005.cn.dormitoryspringboot.controller;
 
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +32,12 @@ public class StudentController {
 		log.info("获取学生可选宿舍信息,{},{}", className, gender);
 		List<PlanDormitoryVo> dormitoryVoList = studentService.getPlanDormitory(className, gender);
 		return Result.success(dormitoryVoList);
+	}
+	@PostMapping("/chooseBed")
+	public Result insertChooseBed(@RequestBody ChooseBedDto chooseBedDto) {
+		log.info("学生选择床位,{}", chooseBedDto);
+		studentService.insertChooseBed(chooseBedDto);
+		return Result.success();
 	}
 
 }

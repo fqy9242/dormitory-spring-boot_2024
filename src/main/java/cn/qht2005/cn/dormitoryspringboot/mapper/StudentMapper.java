@@ -15,4 +15,10 @@ public interface StudentMapper {
 	@Select("select id, name, student_number, gender, class_name, bed_number from student " +
 			"where student_number = #{studentNumber} and login_password = #{password} and is_delete = 0")
 	Student selectByStudentNumberAndPassword(String studentNumber, String password);
+
+	/**
+	 * 根据学号查询学生信息
+	 * @param student
+	 */
+	void updateByStudent(Student student);
 }

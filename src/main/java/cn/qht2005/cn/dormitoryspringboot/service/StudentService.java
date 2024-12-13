@@ -1,5 +1,6 @@
 package cn.qht2005.cn.dormitoryspringboot.service;
 
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 
@@ -21,5 +22,11 @@ public interface StudentService {
 	 * @return
 	 */
 	List<PlanDormitoryVo>getPlanDormitory(String className, Integer gender);
+
+	/**
+	 * 选择床位
+	 * @param chooseBedDto
+	 */
+	void insertChooseBed(ChooseBedDto chooseBedDto);
 
 }

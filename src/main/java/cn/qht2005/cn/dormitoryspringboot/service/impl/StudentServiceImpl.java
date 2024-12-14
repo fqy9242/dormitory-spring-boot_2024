@@ -91,6 +91,7 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	@Transactional
+	// TODO 做一个判断 如果该班级在该宿舍的人数已经满了就不能选
 	public void insertChooseBed(ChooseBedDto chooseBedDto) {
 		// 生成床位号
 		String bedNumber = chooseBedDto.getDormitoryId() + "-" + chooseBedDto.getBedRange();
@@ -128,6 +129,7 @@ public class StudentServiceImpl implements StudentService {
 	public GetAlreadyChooseBedVo getAlreadyChooseBed(String studentNumber) {
 		// 从数据库中查询学生已选床位信息
 		ChooseBed chooseBed = chooseBedMapper.selectByStudentNumber(studentNumber);
+		if (chooseBed == null) return null;
 		// 将ChooseBed转换为GetAlreadyChooseBedVo
 		GetAlreadyChooseBedVo getAlreadyChooseBedVo = new GetAlreadyChooseBedVo();
 		BeanUtils.copyProperties(chooseBed, getAlreadyChooseBedVo);
@@ -180,7 +182,6 @@ public class StudentServiceImpl implements StudentService {
 							.build()
 			);
 		}
-
 		return occupiedBedVos;
 	}
 

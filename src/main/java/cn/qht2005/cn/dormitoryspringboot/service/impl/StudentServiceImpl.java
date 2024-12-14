@@ -117,4 +117,16 @@ public class StudentServiceImpl implements StudentService {
 		student.setStudentNumber(chooseBedDto.getStudentNumber());
 		studentMapper.updateByStudent(student);
 	}
+
+	/**
+	 * 获取学生已选床位
+	 *
+	 * @param studentNumber
+	 * @return
+	 */
+	@Override
+	public ChooseBed getAlreadyChooseBed(String studentNumber) {
+		ChooseBed chooseBed = chooseBedMapper.selectByStudentNumber(studentNumber);
+		return chooseBed;
+	}
 }

@@ -3,7 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.qht2005.cn.dormitoryspringboot.mapper.StudentMapper">
-
+    <resultMap id="studentResultMapper" type="cn.qht2005.cn.dormitoryspringboot.pojo.entry.Student">
+        <result column="is_delete" property="delete" />
+    </resultMap>
     <!--更新表-->
     <update id="updateByStudent">
         update student

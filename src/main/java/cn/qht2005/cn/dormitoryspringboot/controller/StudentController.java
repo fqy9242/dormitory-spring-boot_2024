@@ -1,6 +1,7 @@
 package cn.qht2005.cn.dormitoryspringboot.controller;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
@@ -38,6 +39,18 @@ public class StudentController {
 		log.info("学生选择床位,{}", chooseBedDto);
 		studentService.insertChooseBed(chooseBedDto);
 		return Result.success();
+	}
+
+	/**
+	 *  获取学生已选床位
+	 * @param studentNumber
+	 * @return
+	 */
+	@GetMapping("/getAlreadyChooseBed")
+	public Result<ChooseBed> getAlreadyChooseBed(String studentNumber) {
+		log.info("获取学生已选床位,{}", studentNumber);
+		ChooseBed chooseBed = studentService.getAlreadyChooseBed(studentNumber);
+		return Result.success(chooseBed);
 	}
 
 }

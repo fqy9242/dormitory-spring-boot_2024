@@ -3,6 +3,7 @@ package cn.qht2005.cn.dormitoryspringboot.controller;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetOccupiedBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
@@ -52,6 +53,16 @@ public class StudentController {
 		log.info("获取学生已选床位,{}", studentNumber);
 		GetAlreadyChooseBedVo chooseBed = studentService.getAlreadyChooseBed(studentNumber);
 		return Result.success(chooseBed);
+	}
+
+	/**
+	 * 根据宿舍id列表获取因为选择的床位
+	 */
+	@GetMapping("/getOccupiedBed")
+	public Result<List<GetOccupiedBedVo>> getOccupiedBed(@RequestParam List<Long> dormitoryIds) {
+		log.info("获取宿舍已被占用位,{}", dormitoryIds);
+		List<GetOccupiedBedVo> bedRanges = studentService.getOccupiedBed(dormitoryIds);
+		return Result.success(bedRanges);
 	}
 
 }

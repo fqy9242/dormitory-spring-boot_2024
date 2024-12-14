@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 @Mapper
 /**
  *  选床位表mapper
@@ -39,4 +41,9 @@ public interface ChooseBedMapper {
 	@ResultMap("chooseBedResultMapper")
 	@Select("select * from choose_bed where student_number = #{studentNumber} and is_delete = 0")
 	ChooseBed selectByStudentNumber(String studentNumber);
+
+	/**
+	 * 根据床位号列表查询是否存在  返回存在的床位号
+	 */
+	List<String> selectBedNumbersIfExist(List<String> bedNumberList);
 }

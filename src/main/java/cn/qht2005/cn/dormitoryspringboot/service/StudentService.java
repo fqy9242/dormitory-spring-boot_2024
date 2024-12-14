@@ -3,6 +3,7 @@ package cn.qht2005.cn.dormitoryspringboot.service;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetOccupiedBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 
@@ -37,4 +38,11 @@ public interface StudentService {
 	 * @return
 	 */
 	GetAlreadyChooseBedVo getAlreadyChooseBed(String studentNumber);
+
+	/**
+	 * 获根据宿舍id列表已被选择的床位
+	 * @param dormitoryIds 宿舍id列表
+	 * @return
+	 */
+	List<GetOccupiedBedVo> getOccupiedBed(List<Long> dormitoryIds);
 }

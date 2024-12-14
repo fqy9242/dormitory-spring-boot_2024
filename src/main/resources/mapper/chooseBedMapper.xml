@@ -11,5 +11,19 @@
         INSERT INTO choose_bed (bed_number, student_number, create_time, update_time)
         VALUES (#{bedNumber}, #{studentNumber}, #{createTime}, #{updateTime})
     </insert>
+    <!--根据宿舍id列表获取宿舍-->
+    <select id="selectFreeBed" resultType="java.lang.Integer">
+
+    </select>
+    <!--根据床位号列表查询是否存在  返回存在的床位号-->
+    <select id="selectBedNumbersIfExist" resultType="java.lang.String">
+        SELECT bed_number
+        FROM choose_bed
+        WHERE bed_number IN
+        <foreach collection="bedNumberList" item="bedNumber" open="(" close=")" separator=",">
+            #{bedNumber}
+        </foreach>
+        and is_delete = 0
+    </select>
 
 </mapper>

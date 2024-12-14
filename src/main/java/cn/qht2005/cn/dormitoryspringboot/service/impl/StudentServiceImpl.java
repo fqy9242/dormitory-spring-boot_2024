@@ -11,10 +11,7 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Student;
-import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
-import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
-import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
-import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.*;
 import cn.qht2005.cn.dormitoryspringboot.properties.JwtProperties;
 import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
 import cn.qht2005.cn.dormitoryspringboot.utils.JwtUtil;
@@ -24,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,4 +139,49 @@ public class StudentServiceImpl implements StudentService {
 		getAlreadyChooseBedVo.setBedRange(split[1]);
 		return getAlreadyChooseBedVo;
 	}
+
+	/**
+	 *  根据宿舍号生成所有的床位号集合
+	 * @param dormitoryId 宿舍id
+	 * @return
+	 */
+	public List<String> generateBedNumberList(Long dormitoryId) {
+		// 获取床位数量
+		DormitoryVo dormitoryVo = dormitoryMapper.selectDetailById(dormitoryId);
+		// 生成床位号列表
+		List<String> bedNumberList = new ArrayList<>();
+		for (int i = 1; i <= dormitoryVo.getBedAmount(); i++) {
+			// 生成床位号
+			bedNumberList.add(dormitoryId + "-" + i);
+		}
+		return bedNumberList;
+	}
+
+	/**
+	 * 获根据宿舍id列表已被选择的床位
+	 *
+	 * @param dormitoryIds 宿舍id列表
+	 * @return
+	 */
+	@Override
+	public List<GetOccupiedBedVo> getOccupiedBed(List<Long> dormitoryIds) {
+		// 创建返回结果列表
+		List<GetOccupiedBedVo> occupiedBedVos = new ArrayList<>();
+		// 生成床位号列表
+		for (Long dormitoryId : dormitoryIds) {
+			List<String> bedNumberList = generateBedNumberList(dormitoryId);
+			// 查询已被选择的床位号
+			List<String> occupiedBedList = chooseBedMapper.selectBedNumbersIfExist(bedNumberList);
+			// 将已被选择的床位号转换为GetOccupiedBedVo
+			occupiedBedVos.add(GetOccupiedBedVo
+							.builder()
+							.dormitoryId(dormitoryId)
+							.occupiedBedRange(occupiedBedList)
+							.build()
+			);
+		}
+
+		return occupiedBedVos;
+	}
+
 }

@@ -2,6 +2,7 @@ package cn.qht2005.cn.dormitoryspringboot.service;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 
@@ -35,5 +36,5 @@ public interface StudentService {
 	 * @param studentNumber
 	 * @return
 	 */
-	ChooseBed getAlreadyChooseBed(String studentNumber);
+	GetAlreadyChooseBedVo getAlreadyChooseBed(String studentNumber);
 }

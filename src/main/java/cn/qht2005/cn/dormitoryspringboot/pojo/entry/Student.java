@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,9 +27,9 @@ public class Student {
 	// 紧急联系人
 	private String emergencyContact;
 	// 创建时间
-	private String createTime;
+	private LocalDateTime createTime;
 	// 更新时间
-	private String updateTime;
+	private LocalDateTime updateTime;
 	// 删除标记
 	private Integer delete;
 

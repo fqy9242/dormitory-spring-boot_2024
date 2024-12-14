@@ -12,6 +12,7 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Student;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.properties.JwtProperties;
@@ -115,6 +116,7 @@ public class StudentServiceImpl implements StudentService {
 		Student student = new Student();
 		student.setBedNumber(bedNumber);
 		student.setStudentNumber(chooseBedDto.getStudentNumber());
+		student.setUpdateTime(LocalDateTime.now());
 		studentMapper.updateByStudent(student);
 	}
 
@@ -125,8 +127,18 @@ public class StudentServiceImpl implements StudentService {
 	 * @return
 	 */
 	@Override
-	public ChooseBed getAlreadyChooseBed(String studentNumber) {
+	public GetAlreadyChooseBedVo getAlreadyChooseBed(String studentNumber) {
+		// 从数据库中查询学生已选床位信息
 		ChooseBed chooseBed = chooseBedMapper.selectByStudentNumber(studentNumber);
-		return chooseBed;
+		// 将ChooseBed转换为GetAlreadyChooseBedVo
+		GetAlreadyChooseBedVo getAlreadyChooseBedVo = new GetAlreadyChooseBedVo();
+		BeanUtils.copyProperties(chooseBed, getAlreadyChooseBedVo);
+		// 获取宿舍详细信息并封装到vo
+		// 获取宿舍id
+		String[] split = chooseBed.getBedNumber().split("-");
+		DormitoryVo dormitoryVo = dormitoryMapper.selectDetailById(Long.parseLong(split[0]));
+		getAlreadyChooseBedVo.setDormitoryName(dormitoryVo.getDormitoryName());
+		getAlreadyChooseBedVo.setBedRange(split[1]);
+		return getAlreadyChooseBedVo;
 	}
 }

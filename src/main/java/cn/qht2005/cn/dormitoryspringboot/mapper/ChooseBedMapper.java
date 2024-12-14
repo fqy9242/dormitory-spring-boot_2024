@@ -28,7 +28,7 @@ public interface ChooseBedMapper {
 	/**
 	 *  根据学号逻辑删除该学生床位信息
 	 */
-	@Update("update choose_bed set is_delete = 1 where student_number = #{studentNumber}")
+	@Update("update choose_bed set is_delete = 1, update_time = now() where student_number = #{studentNumber}")
 	void updateToDeleteByStudentNumber(String studentNumber);
 
 	/**

@@ -2,6 +2,7 @@ package cn.qht2005.cn.dormitoryspringboot.controller;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.StudentLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
@@ -47,9 +48,9 @@ public class StudentController {
 	 * @return
 	 */
 	@GetMapping("/getAlreadyChooseBed")
-	public Result<ChooseBed> getAlreadyChooseBed(String studentNumber) {
+	public Result<GetAlreadyChooseBedVo> getAlreadyChooseBed(String studentNumber) {
 		log.info("获取学生已选床位,{}", studentNumber);
-		ChooseBed chooseBed = studentService.getAlreadyChooseBed(studentNumber);
+		GetAlreadyChooseBedVo chooseBed = studentService.getAlreadyChooseBed(studentNumber);
 		return Result.success(chooseBed);
 	}
 

@@ -13,7 +13,7 @@ public class ChooseBed {
 	// id
 	private Long id;
 	// 宿舍id
-	private Long dormitoryId;
+//	private Long dormitoryId;
 	// 学号
 	private String studentNumber;
 	// 床位号（规则 -> 宿舍id + 床位序号）

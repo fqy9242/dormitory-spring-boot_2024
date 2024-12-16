@@ -135,11 +135,11 @@ public class StudentServiceImpl implements StudentService {
 		GetAlreadyChooseBedVo getAlreadyChooseBedVo = new GetAlreadyChooseBedVo();
 		BeanUtils.copyProperties(chooseBed, getAlreadyChooseBedVo);
 		// 获取宿舍详细信息并封装到vo
-		// 获取宿舍id
 		String[] split = chooseBed.getBedNumber().split("-");
 		DormitoryVo dormitoryVo = dormitoryMapper.selectDetailById(Long.parseLong(split[0]));
 		getAlreadyChooseBedVo.setDormitoryName(dormitoryVo.getDormitoryName());
 		getAlreadyChooseBedVo.setBedRange(split[1]);
+		getAlreadyChooseBedVo.setDormitoryId(Long.parseLong(split[0]));
 		return getAlreadyChooseBedVo;
 	}
 

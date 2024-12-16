@@ -12,6 +12,8 @@ public class GetAlreadyChooseBedVo {
 //	private Long dormitoryId;
 	// 学号
 	private String studentNumber;
+	// 宿舍id
+	private Long dormitoryId;
 	// 宿舍全称(东一区1栋111)
 	private String dormitoryName;
 	// 床位序号 (1,2,3...)

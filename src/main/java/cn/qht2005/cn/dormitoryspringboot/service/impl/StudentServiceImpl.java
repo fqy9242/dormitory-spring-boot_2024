@@ -43,6 +43,7 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public StudentLoginVo login(String studentNumber, String password) {
+		// TODO 判断该学生的账号是否为默认密码 如果是 则让其修改密码
 		Student student = studentMapper.selectByStudentNumberAndPassword(studentNumber, password);
 		if (student == null) {
 			// 根据学号跟密码查询不到学生信息

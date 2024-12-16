@@ -10,5 +10,7 @@ public class StudentLoginVo {
 	private Integer gender;
 	private String className;
 	private String bedNumber;
+	// 紧急联系人电话号码
+	private String emergencyContactPhone;
 	private String token;
 }

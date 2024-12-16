@@ -25,7 +25,7 @@ public class Student {
 	// 床位号
 	private String bedNumber;
 	// 紧急联系人
-	private String emergencyContact;
+	private String emergencyContactPhone;
 	// 创建时间
 	private LocalDateTime createTime;
 	// 更新时间

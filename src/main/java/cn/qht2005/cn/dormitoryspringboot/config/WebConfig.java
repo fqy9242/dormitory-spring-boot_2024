@@ -11,12 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
 	private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
 	/**
 	 *  添加拦截器
-	 * @param registry
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 设置不登陆也不会拦截的接口
-		registry.addInterceptor(jwtTokenAdminInterceptor).excludePathPatterns("/student/login"
+		registry.addInterceptor(jwtTokenAdminInterceptor).excludePathPatterns("/**/*login*"
 		);
 	}
 }

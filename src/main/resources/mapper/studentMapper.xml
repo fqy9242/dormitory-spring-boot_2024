@@ -31,4 +31,6 @@
             </otherwise>
         </choose>
     </update>
+
+    <select id="pageList" resultType="com.github.pagehelper.Page"></select>
 </mapper>

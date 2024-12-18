@@ -1,6 +1,8 @@
 package cn.qht2005.cn.dormitoryspringboot.mapper;
 
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Student;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
@@ -23,4 +25,5 @@ public interface StudentMapper {
 	 * @param student
 	 */
 	void updateByStudent(Student student);
+
 }

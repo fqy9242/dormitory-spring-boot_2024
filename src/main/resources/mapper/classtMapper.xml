@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qht2005.cn.dormitoryspringboot.mapper.ClassMapper">
+    <resultMap id="studentResultMapper" type="cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class">
+        <result column="is_delete" property="delete" />
+    </resultMap>
+    <!--分页查询-->
+    <select id="pageList" resultType="cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo">
+        select id, class_name, class_code, college_name, boy_amount, girl_amount, teacher_phone_number
+        from class
+        <where>
+            <if test="classCode != null and classCode != ''">
+                and class_code = #{classCode}
+            </if>
+            <if test="className != null and className != ''">
+                and class_name like concat('%', #{className}, '%')
+            </if>
+            <if test="collegeName != null and collegeName != ''">
+                and college_name = #{collegeName}
+            </if>
+            <if test="teacherPhoneNumber != null and teacherPhoneNumber != ''">
+                and teacher_phone_number = #{teacherPhoneNumber}
+            </if>
+            <if test="grade != null">
+                and grade = #{grade}
+            </if>
+            <if test="boyAmountStart != null">
+                and boy_amount &gt;= #{boyAmountStart}
+            </if>
+            <if test="boyAmountEnd != null">
+                and boy_amount &lt;= #{boyAmountEnd}
+            </if>
+            <if test="girlAmountStart != null">
+                and girl_amount &gt;= #{girlAmountStart}
+            </if>
+            <if test="girlAmountEnd != null">
+                and girl_amount &lt;= #{girlAmountEnd}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
+
+
+</mapper>

@@ -11,4 +11,13 @@ import java.util.List;
 public interface PlanDormitoryMapper {
 	@Select("select * from plan_dormitory where class_name = #{className} and dormitory_type = #{gender} and is_delete = 0")
 	List<PlanDormitory> selectByClassNameAndGender(String className, Integer gender);
+
+	/**
+	 * 根据班级名称和性别统计人数
+	 * @param className
+	 * @param gender
+	 */
+	@Select("select count(*) from plan_dormitory where class_name = #{className} " +
+			"and dormitory_type = #{gender} and is_delete = 0")
+	Integer countByClassNameAndGender(String className, Integer gender);
 }

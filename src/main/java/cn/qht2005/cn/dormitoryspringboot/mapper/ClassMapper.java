@@ -13,5 +13,5 @@ public interface ClassMapper {
 	 * @param lIstClassDto
 	 * @return
 	 */
-	Page<GetClassVo> pageList(ListClassDto lIstClassDto);
+	Page<Class> pageList(ListClassDto lIstClassDto);
 }

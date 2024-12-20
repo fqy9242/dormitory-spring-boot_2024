@@ -7,8 +7,8 @@
         <result column="is_delete" property="delete" />
     </resultMap>
     <!--分页查询-->
-    <select id="pageList" resultType="cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo">
-        select id, class_name, class_code, college_name, boy_amount, girl_amount, teacher_phone_number
+    <select id="pageList" resultType="cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class">
+        select id, class_name, class_code, college_name,grade, boy_amount, girl_amount, teacher_phone_number
         from class
         <where>
             <if test="classCode != null and classCode != ''">
@@ -18,7 +18,7 @@
                 and class_name like concat('%', #{className}, '%')
             </if>
             <if test="collegeName != null and collegeName != ''">
-                and college_name = #{collegeName}
+                and college_name like concat('%', #{collegeName}, '%')
             </if>
             <if test="teacherPhoneNumber != null and teacherPhoneNumber != ''">
                 and teacher_phone_number = #{teacherPhoneNumber}

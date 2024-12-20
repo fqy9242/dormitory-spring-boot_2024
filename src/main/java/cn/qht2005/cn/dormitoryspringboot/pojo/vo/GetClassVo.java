@@ -2,7 +2,7 @@ package cn.qht2005.cn.dormitoryspringboot.pojo.vo;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+
 @Data
 public class GetClassVo {
 	private Long id;
@@ -13,4 +13,8 @@ public class GetClassVo {
 	private Integer boyAmount;
 	private Integer girlAmount;
 	private String teacherPhoneNumber;
+	// 男生已分配宿舍人数
+	private Integer boyAlreadyPlanDormitoryAmount;
+	// 女生已分配人数
+	private Integer girlAlreadyPlanDormitoryAmount;
 }

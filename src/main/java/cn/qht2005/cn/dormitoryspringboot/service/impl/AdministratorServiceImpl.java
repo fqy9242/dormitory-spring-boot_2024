@@ -4,6 +4,7 @@ import cn.qht2005.cn.dormitoryspringboot.constant.MessageConstant;
 import cn.qht2005.cn.dormitoryspringboot.exception.LoginFailException;
 import cn.qht2005.cn.dormitoryspringboot.mapper.AdministratorMapper;
 import cn.qht2005.cn.dormitoryspringboot.mapper.ClassMapper;
+import cn.qht2005.cn.dormitoryspringboot.mapper.PlanDormitoryMapper;
 import cn.qht2005.cn.dormitoryspringboot.mapper.StudentMapper;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
@@ -22,8 +23,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class AdministratorServiceImpl implements AdministratorService {
@@ -35,6 +39,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private StudentMapper studentMapper;
 	@Autowired
 	private ClassMapper classMapper;
+	@Autowired
+	private PlanDormitoryMapper planDormitoryMapper;
 	/**
 	 * 管理员登录
 	 *
@@ -63,16 +69,22 @@ public class AdministratorServiceImpl implements AdministratorService {
 
 	/**
 	 * 获取班级列表
-	 *
-	 * @param lIstClassDto
-	 * @return
 	 */
-	@Override
-	public PageResult listClass(ListClassDto lIstClassDto) {
-		PageHelper.startPage(lIstClassDto.getPage(), lIstClassDto.getPageSize());
-		Page<GetClassVo> page = classMapper.pageList(lIstClassDto);
-		PageResult pageResult = new PageResult(page.getTotal(), page.getResult());
-		return pageResult;
-
+	public PageResult listClass(ListClassDto listClassDto) {
+		// 设置分页参数
+		PageHelper.startPage(listClassDto.getPage(), listClassDto.getPageSize());
+		// 获取班级列表
+		Page<Class> page = classMapper.pageList(listClassDto);
+		// 处理为VO集合
+		List<GetClassVo> result = page.getResult().stream().map(classEntry -> {
+			GetClassVo getClassVo = new GetClassVo();
+			// 拷贝属性
+			BeanUtils.copyProperties(classEntry, getClassVo);
+			// 设置男生已分配宿舍人数
+			getClassVo.setBoyAlreadyPlanDormitoryAmount(planDormitoryMapper.countByClassNameAndGender(classEntry.getClassName(), 1));
+			getClassVo.setGirlAlreadyPlanDormitoryAmount(planDormitoryMapper.countByClassNameAndGender(classEntry.getClassName(), 2));
+			return getClassVo;
+		}).collect(Collectors.toList());
+		return new PageResult(page.getTotal(), result);
 	}
 }

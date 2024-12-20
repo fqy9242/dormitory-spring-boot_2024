@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qht2005.cn.dormitoryspringboot.mapper.PlanDormitoryMapper">
+    <resultMap id="studentResultMapper" type="cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory">
+        <result column="is_delete" property="delete" />
+    </resultMap>
+    <update id="updateByEntry">
+        update plan_dormitory
+        <set>
+            <if test="planNumber != null">plan_number = #{planNumber},</if>
+            <if test="chooseNumber != null">choose_number = #{chooseNumber}, </if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delete != null">is_delete = #{delete}, </if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+                <otherwise>
+                    class_name = #{className} and dormitory_id = #{dormitoryId}
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+</mapper>

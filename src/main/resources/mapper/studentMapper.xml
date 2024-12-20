@@ -16,7 +16,7 @@
             <if test="gender != null">gender = #{gender}, </if>
             <if test="className != null and className != ''"> class_name = #{className}, </if>
             <if test="bedNumber != null and bedNumber != ''">bed_number = #{bedNumber},</if>
-            <if test="emergencyContact != null and emergencyContact != ''">emergency_contact = #{emergencyContact},</if>
+            <if test="emergencyContactPhone != null and emergencyContactPhone != ''">emergency_contact_phone = #{emergencyContactPhone},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime}, </if>
             <if test="delete != null">is_delete = #{delete}, </if>

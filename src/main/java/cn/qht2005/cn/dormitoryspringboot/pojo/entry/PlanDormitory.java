@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +22,9 @@ public class PlanDormitory {
 	// 选择人数
 	private Integer chooseNumber;
 	// 创建时间
-	private String createTime;
+	private LocalDateTime createTime;
 	// 更新时间
-	private String updateTime;
+	private LocalDateTime updateTime;
 	// 是否删除
 	private Integer delete;
 }

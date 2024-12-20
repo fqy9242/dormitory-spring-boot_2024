@@ -26,4 +26,11 @@ public interface StudentMapper {
 	 */
 	void updateByStudent(Student student);
 
+	/**
+	 * 根据学号查询学生信息
+	 * @param studentNumber
+	 * @return
+	 */
+	@Select("select * from student where student_number = #{studentNumber} and is_delete = 0")
+	Student selectByStudentNumber(String studentNumber);
 }

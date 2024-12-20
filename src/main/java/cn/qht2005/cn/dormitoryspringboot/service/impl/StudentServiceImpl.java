@@ -92,7 +92,6 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	@Transactional
-	// TODO 做一个判断 如果该班级在该宿舍的人数已经满了就不能选
 	public void insertChooseBed(ChooseBedDto chooseBedDto) {
 		// 生成床位号
 		String bedNumber = chooseBedDto.getDormitoryId() + "-" + chooseBedDto.getBedRange();
@@ -101,6 +100,15 @@ public class StudentServiceImpl implements StudentService {
 		if (res != null) {
 			// 有人选
 			throw new BaseException(MessageConstant.THIS_BED_IS_OCCUPIED);
+		}
+		// 获取学生信息
+		Student student = studentMapper.selectByStudentNumber(chooseBedDto.getStudentNumber());
+		// 获取分配表信息
+		PlanDormitory planDormitory = dormitoryMapper.selectPlanDormitoryByIdAndClassName(chooseBedDto.getDormitoryId(), student.getClassName());
+		// 判断该宿舍分配给该班级的名额是否已满
+		if (planDormitory.getPlanNumber() <= planDormitory.getChooseNumber()) {
+			// 该宿舍分配给该班级的名额已满
+			throw new BaseException(MessageConstant.DORMITORY_IS_FULL);
 		}
 		// 逻辑删除该学生原本选定的床位
 		chooseBedMapper.updateToDeleteByStudentNumber(chooseBedDto.getStudentNumber());
@@ -113,11 +121,12 @@ public class StudentServiceImpl implements StudentService {
 		// 调用mapper插入数据
 		chooseBedMapper.insertChooseBed(chooseBed);
 		// 更新学生信息
-		Student student = new Student();
 		student.setBedNumber(bedNumber);
 		student.setStudentNumber(chooseBedDto.getStudentNumber());
 		student.setUpdateTime(LocalDateTime.now());
 		studentMapper.updateByStudent(student);
+		// 更新床位分配表信息
+
 	}
 
 	/**

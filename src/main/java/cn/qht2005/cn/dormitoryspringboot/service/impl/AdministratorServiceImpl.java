@@ -81,8 +81,10 @@ public class AdministratorServiceImpl implements AdministratorService {
 			// 拷贝属性
 			BeanUtils.copyProperties(classEntry, getClassVo);
 			// 设置男生已分配宿舍人数
-			getClassVo.setBoyAlreadyPlanDormitoryAmount(planDormitoryMapper.countByClassNameAndGender(classEntry.getClassName(), 1));
-			getClassVo.setGirlAlreadyPlanDormitoryAmount(planDormitoryMapper.countByClassNameAndGender(classEntry.getClassName(), 2));
+			Integer boyAlreadyPlan = planDormitoryMapper.sumPlanNumberByClassNameAndGender(classEntry.getClassName(), 1);
+			Integer girlAlreadyPlan = planDormitoryMapper.sumPlanNumberByClassNameAndGender(classEntry.getClassName(), 2);
+			getClassVo.setBoyAlreadyPlanDormitoryAmount(boyAlreadyPlan == null ? 0 : boyAlreadyPlan);
+			getClassVo.setGirlAlreadyPlanDormitoryAmount(girlAlreadyPlan == null ? 0 : girlAlreadyPlan);
 			return getClassVo;
 		}).collect(Collectors.toList());
 		return new PageResult(page.getTotal(), result);

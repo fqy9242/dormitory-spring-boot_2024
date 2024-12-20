@@ -17,7 +17,6 @@ public interface PlanDormitoryMapper {
 	 * @param className
 	 * @param gender
 	 */
-	@Select("select count(*) from plan_dormitory where class_name = #{className} " +
-			"and dormitory_type = #{gender} and is_delete = 0")
-	Integer countByClassNameAndGender(String className, Integer gender);
+	@Select("SELECT SUM(plan_dormitory.plan_number)  FROM `plan_dormitory` WHERE plan_dormitory.class_name = #{className} AND plan_dormitory.dormitory_type = #{gender} AND plan_dormitory.is_delete = 0")
+	Integer sumPlanNumberByClassNameAndGender(String className, Integer gender);
 }

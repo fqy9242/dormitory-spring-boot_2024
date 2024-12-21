@@ -38,12 +38,21 @@
             <if test="girlAmountEnd != null">
                 and girl_amount &lt;= #{girlAmountEnd}
             </if>
-            <if test="isPlanComplete != null and isPlanComplete = 1">
+            <if test="isPlanComplete != null and isPlanComplete == 1">
                 and class.boy_amount &lt;= (
-                SELECT SUM(plan_dormitory.plan_number) FROM plan_dormitory WHERE plan_dormitory.class_name = class.class_name AND (plan_dormitory.dormitory_type = 1 AND is_delete = 0))
-                AND
-                class.girl_amount &lt;= (
-                SELECT SUM(plan_dormitory.plan_number) FROM plan_dormitory WHERE plan_dormitory.class_name = class.class_name AND (plan_dormitory.dormitory_type = 2 AND is_delete = 0))
+                select sum(plan_dormitory.plan_number)
+                from plan_dormitory
+                where plan_dormitory.class_name = class.class_name
+                and plan_dormitory.dormitory_type = 1
+                and is_delete = 0
+                )
+                and class.girl_amount &lt;= (
+                select sum(plan_dormitory.plan_number)
+                from plan_dormitory
+                where plan_dormitory.class_name = class.class_name
+                and plan_dormitory.dormitory_type = 2
+                and is_delete = 0
+                )
             </if>
             and is_delete = 0
         </where>

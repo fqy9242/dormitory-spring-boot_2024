@@ -31,8 +31,8 @@ public class AdministratorController {
 	 */
 	@PostMapping("/listClass")
 	public Result<PageResult> listClass(@RequestBody ListClassDto listClassDto) {
-		PageResult classList = administratorService.listClass(listClassDto);
 		log.info("获取班级列表:{}", listClassDto);
+		PageResult classList = administratorService.listClass(listClassDto);
 		return Result.success(classList);
 	}
 	/**

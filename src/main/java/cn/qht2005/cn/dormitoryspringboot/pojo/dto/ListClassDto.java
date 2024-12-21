@@ -16,5 +16,7 @@ public class ListClassDto {
 	private Integer girlAmountEnd;
 	private String teacherPhoneNumber;
 	//	private Integer planDormitory;
+	// 是否分配完毕
+	private Integer isPlanComplete;
 
 }

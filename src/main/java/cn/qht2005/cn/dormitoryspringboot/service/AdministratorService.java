@@ -4,6 +4,8 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
 
+import java.util.List;
+
 public interface AdministratorService {
 	/**
 	 * 管理员登录
@@ -19,4 +21,8 @@ public interface AdministratorService {
 	 * @return
 	 */
 	PageResult listClass(ListClassDto lIstClassDto);
+	/**
+	 * 获取学院名称列表
+	 */
+	List<String> listCollegeName();
 }

@@ -17,4 +17,6 @@ public class GetClassVo {
 	private Integer boyAlreadyPlanDormitoryAmount;
 	// 女生已分配人数
 	private Integer girlAlreadyPlanDormitoryAmount;
+	// 全部分配 1是 0否
+//	private Integer isAllPlan;
 }

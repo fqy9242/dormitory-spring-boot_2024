@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/administrator")
 @Slf4j
@@ -33,5 +35,14 @@ public class AdministratorController {
 		PageResult classList = administratorService.listClass(listClassDto);
 		log.info("获取班级列表:{}", listClassDto);
 		return Result.success(classList);
+	}
+	/**
+	 * 获取学院名称列表
+	 */
+	@GetMapping("/listCollegeName")
+	public Result<List<String>> listCollegeName() {
+		log.info("获取学院名称列表");
+		List<String> collegeNameList = administratorService.listCollegeName();
+		return Result.success(collegeNameList);
 	}
 }

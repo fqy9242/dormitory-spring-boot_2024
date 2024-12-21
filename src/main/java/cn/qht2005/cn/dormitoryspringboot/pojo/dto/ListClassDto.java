@@ -16,4 +16,5 @@ public class ListClassDto {
 	private Integer girlAmountEnd;
 	private String teacherPhoneNumber;
 	//	private Integer planDormitory;
+
 }

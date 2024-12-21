@@ -2,10 +2,7 @@ package cn.qht2005.cn.dormitoryspringboot.service.impl;
 
 import cn.qht2005.cn.dormitoryspringboot.constant.MessageConstant;
 import cn.qht2005.cn.dormitoryspringboot.exception.LoginFailException;
-import cn.qht2005.cn.dormitoryspringboot.mapper.AdministratorMapper;
-import cn.qht2005.cn.dormitoryspringboot.mapper.ClassMapper;
-import cn.qht2005.cn.dormitoryspringboot.mapper.PlanDormitoryMapper;
-import cn.qht2005.cn.dormitoryspringboot.mapper.StudentMapper;
+import cn.qht2005.cn.dormitoryspringboot.mapper.*;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
@@ -41,6 +38,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private ClassMapper classMapper;
 	@Autowired
 	private PlanDormitoryMapper planDormitoryMapper;
+	@Autowired
+	private CollegeMapper collegeMapper;
 	/**
 	 * 管理员登录
 	 *
@@ -85,8 +84,19 @@ public class AdministratorServiceImpl implements AdministratorService {
 			Integer girlAlreadyPlan = planDormitoryMapper.sumPlanNumberByClassNameAndGender(classEntry.getClassName(), 2);
 			getClassVo.setBoyAlreadyPlanDormitoryAmount(boyAlreadyPlan == null ? 0 : boyAlreadyPlan);
 			getClassVo.setGirlAlreadyPlanDormitoryAmount(girlAlreadyPlan == null ? 0 : girlAlreadyPlan);
+			// 设置是否全部分配
+//			getClassVo.setIsAllPlan((getClassVo.getBoyAlreadyPlanDormitoryAmount() + getClassVo.getGirlAlreadyPlanDormitoryAmount())
+//					== (classEntry.getBoyAmount() + classEntry.getGirlAmount()) ? 1 : 0);
 			return getClassVo;
 		}).collect(Collectors.toList());
 		return new PageResult(page.getTotal(), result);
+	}
+
+	/**
+	 * 获取学院名称列表
+	 */
+	@Override
+	public List<String> listCollegeName() {
+		return collegeMapper.selectCollegeNameList();
 	}
 }

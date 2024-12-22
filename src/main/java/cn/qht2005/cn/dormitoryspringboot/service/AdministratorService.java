@@ -29,4 +29,9 @@ public interface AdministratorService {
 	List<String> listCollegeName();
 
 	List<PlanDormitoryDetailVo> listPlanDormitoryByClassName(String className);
+
+	/**
+	 * 获取宿舍区域列表
+	 */
+	List<String> listDormitoryArea();
 }

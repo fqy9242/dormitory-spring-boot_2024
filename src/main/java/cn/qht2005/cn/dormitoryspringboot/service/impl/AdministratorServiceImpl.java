@@ -6,24 +6,19 @@ import cn.qht2005.cn.dormitoryspringboot.mapper.*;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
-import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
-import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.properties.JwtProperties;
 import cn.qht2005.cn.dormitoryspringboot.service.AdministratorService;
 import cn.qht2005.cn.dormitoryspringboot.utils.JwtUtil;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
-import cn.qht2005.cn.dormitoryspringboot.utils.result.Result;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.javassist.ClassMap;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +38,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private PlanDormitoryMapper planDormitoryMapper;
 	@Autowired
 	private CollegeMapper collegeMapper;
+	@Autowired
+	private AreaMapper AreaMapper;
 	/**
 	 * 管理员登录
 	 *
@@ -108,5 +105,13 @@ public class AdministratorServiceImpl implements AdministratorService {
 		// 1. 根据班级名称查询宿舍分配列表
 		List<PlanDormitoryDetailVo> planDormitories = planDormitoryMapper.selectDetailByClassName(className);
 		return planDormitories;
+	}
+
+	/**
+	 * 获取宿舍区域列表
+	 */
+	@Override
+	public List listDormitoryArea() {
+		return AreaMapper.selectAllName();
 	}
 }

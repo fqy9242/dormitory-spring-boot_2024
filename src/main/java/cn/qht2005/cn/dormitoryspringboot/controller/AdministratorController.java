@@ -55,4 +55,13 @@ public class AdministratorController {
 		List<PlanDormitoryDetailVo> planDormitoryVoList = administratorService.listPlanDormitoryByClassName(className);
 		return Result.success(planDormitoryVoList);
 	}
+	/**
+	 * 获取宿舍区域列表
+	 */
+	@GetMapping("/listDormitoryArea")
+	public Result<List<String>> listDormitoryArea() {
+		log.info("获取宿舍区域列表");
+		List<String> dormitoryAreaList = administratorService.listDormitoryArea();
+		return Result.success(dormitoryAreaList);
+	}
 }

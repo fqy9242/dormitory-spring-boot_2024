@@ -6,8 +6,11 @@ import cn.qht2005.cn.dormitoryspringboot.mapper.*;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.properties.JwtProperties;
 import cn.qht2005.cn.dormitoryspringboot.service.AdministratorService;
 import cn.qht2005.cn.dormitoryspringboot.utils.JwtUtil;
@@ -98,5 +101,12 @@ public class AdministratorServiceImpl implements AdministratorService {
 	@Override
 	public List<String> listCollegeName() {
 		return collegeMapper.selectCollegeNameList();
+	}
+
+	@Override
+	public List<PlanDormitoryDetailVo> listPlanDormitoryByClassName(String className) {
+		// 1. 根据班级名称查询宿舍分配列表
+		List<PlanDormitoryDetailVo> planDormitories = planDormitoryMapper.selectDetailByClassName(className);
+		return planDormitories;
 	}
 }

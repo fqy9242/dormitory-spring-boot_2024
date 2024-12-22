@@ -2,6 +2,8 @@ package cn.qht2005.cn.dormitoryspringboot.controller;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.service.AdministratorService;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.Result;
@@ -43,5 +45,14 @@ public class AdministratorController {
 		log.info("获取学院名称列表");
 		List<String> collegeNameList = administratorService.listCollegeName();
 		return Result.success(collegeNameList);
+	}
+	/**
+	 * 获取班级宿舍列表
+	 */
+	@GetMapping("/listPlanDormitoryByClassName")
+	public Result<List<PlanDormitoryDetailVo>> listPlanDormitoryByClassName(String className) {
+		log.info("获取班级宿舍列表:{}", className);
+		List<PlanDormitoryDetailVo> planDormitoryVoList = administratorService.listPlanDormitoryByClassName(className);
+		return Result.success(planDormitoryVoList);
 	}
 }

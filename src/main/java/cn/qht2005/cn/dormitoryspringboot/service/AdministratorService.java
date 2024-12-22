@@ -2,6 +2,8 @@ package cn.qht2005.cn.dormitoryspringboot.service;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
 
 import java.util.List;
@@ -25,4 +27,6 @@ public interface AdministratorService {
 	 * 获取学院名称列表
 	 */
 	List<String> listCollegeName();
+
+	List<PlanDormitoryDetailVo> listPlanDormitoryByClassName(String className);
 }

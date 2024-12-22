@@ -112,6 +112,6 @@ public class AdministratorServiceImpl implements AdministratorService {
 	 */
 	@Override
 	public List listDormitoryArea() {
-		return AreaMapper.selectAllName();
+		return AreaMapper.selectAll();
 	}
 }

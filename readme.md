@@ -10,12 +10,6 @@
 
 后端地址: [fqy9242/dormitory-spring-boot_2024: 大二劳动课作业后端 宿管系统 (github.com)](https://github.com/fqy9242/dormitory-spring-boot_2024)
 
-
-
-
-
-
-
 ## 数据生成
 
 注:数据库中信息均使python生成 不具备真实性 如有雷同 纯属巧合。
@@ -66,5 +60,73 @@ def generate_class_to_dataBase(connection, n):
         connection.commit()
     # 关闭资源
     connection.close()
+```
+
+```python
+# 生成宿舍数据
+def generate_dormitory_to_database(connection):
+    try:
+        # 查询所有的楼栋
+        select_building = "SELECT * FROM building;"
+        with connection.cursor() as cursor:
+            cursor.execute(select_building)
+            building_list = cursor.fetchall()
+            for building in tqdm(building_list, desc="正在生成并插入宿舍数据"):
+                building_id = building[0]
+                # building_name = building[1]
+                floor_dormitory_amount = building[4]
+                floor_amount = building[5]
+                # 生成楼层
+                for floor in range(1, floor_amount + 1):  # 包括floor_amount
+                    # 生成宿舍
+                    for room in range(1, floor_dormitory_amount + 1):  # 包括floor_dormitory_amount
+                        dormitory_number = f"{floor}{room:02d}"  # 使用格式化字符串统一格式
+                        bed_amount = "10"
+                        insert_sql = ("INSERT INTO dormitory (dormitory_number, building_id, bed_amount, create_time, "
+                                      "update_time) VALUES (%s, %s, %s, NOW(), NOW());")
+                        cursor.execute(insert_sql, (dormitory_number, building_id, bed_amount))
+            # 提交事务
+            connection.commit()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        connection.rollback()
+```
+
+```python
+# 生成学生数据
+def generate_student_to_database(connection):
+    try:
+        # 查询所有班级
+        select_class = "SELECT * FROM class;"
+        with connection.cursor() as cursor:
+            cursor.execute(select_class)
+            class_list = cursor.fetchall()
+            for class_ in tqdm(class_list, desc="正在生成并插入学生数据"):
+                class_name = class_[1]
+                class_code = class_[2]
+                student_amount = class_[5] + class_[6]
+                for i in range(1, student_amount + 1):
+                    # 判断学生是否已经存在
+                    select_student = "SELECT id FROM student WHERE student_number = %s;"
+                    cursor.execute(select_student, (class_code + str(i)))
+                    result = cursor.fetchall()
+                    if result:
+                        continue
+                    # 生成学生数据
+                    student_name = fake.name()
+                    student_number = f"{class_code}{i:02d}"
+                    login_password = "123456"
+                    gender = random.randint(1, 2)
+                    emergency_contact_phone = fake.phone_number()
+                    insert_sql = ("insert into student(name, student_number, login_password, gender, class_name, "
+                                  "emergency_contact_phone, create_time, update_time) values (%s, %s, %s, %s, %s, %s, "
+                                  "now(), now());")
+                    cursor.execute(insert_sql, (student_name, student_number, login_password, gender, class_name,
+                                                emergency_contact_phone))
+        connection.commit()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        connection.rollback()
+
 ```
 

@@ -5,6 +5,7 @@ import cn.qht2005.cn.dormitoryspringboot.exception.LoginFailException;
 import cn.qht2005.cn.dormitoryspringboot.mapper.*;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo;
@@ -40,6 +41,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private CollegeMapper collegeMapper;
 	@Autowired
 	private AreaMapper AreaMapper;
+	@Autowired
+	private BuildingMapper buildingMapper;
 	/**
 	 * 管理员登录
 	 *
@@ -113,5 +116,13 @@ public class AdministratorServiceImpl implements AdministratorService {
 	@Override
 	public List listDormitoryArea() {
 		return AreaMapper.selectAll();
+	}
+
+	/**
+	 * 获取楼栋列表根据宿舍区域
+	 */
+	@Override
+	public List<Building> listBuildingByArea(Integer areaId) {
+		return buildingMapper.selectByAreaId(areaId);
 	}
 }

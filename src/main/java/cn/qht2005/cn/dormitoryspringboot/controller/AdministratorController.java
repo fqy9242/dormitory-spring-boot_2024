@@ -1,6 +1,7 @@
 package cn.qht2005.cn.dormitoryspringboot.controller;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.DormitoryArea;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
@@ -64,5 +65,15 @@ public class AdministratorController {
 		log.info("获取宿舍区域列表");
 		List<DormitoryArea> dormitoryAreaList = administratorService.listDormitoryArea();
 		return Result.success(dormitoryAreaList);
+	}
+
+	/**
+	 *  根据宿舍区域获取楼栋列表
+	 */
+	@GetMapping("/listBuildingByArea")
+	public Result<List<Building>> listBuildingByArea(Integer areaId) {
+		log.info("获取楼栋列表:{}", areaId);
+		List<Building> buildingList = administratorService.listBuildingByArea(areaId);
+		return Result.success(buildingList);
 	}
 }

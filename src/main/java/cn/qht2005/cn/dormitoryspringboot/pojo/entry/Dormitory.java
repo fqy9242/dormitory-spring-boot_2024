@@ -16,6 +16,8 @@ public class Dormitory {
 	private Long buildingId;
 	// 床位数
 	private Integer bedNumber;
+	// 入住人数
+	private Integer checkInNumber;
 	// 创建时间
 	private String createTime;
 	// 更新时间

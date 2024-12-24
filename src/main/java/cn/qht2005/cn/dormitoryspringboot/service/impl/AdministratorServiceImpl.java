@@ -10,6 +10,7 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
 import cn.qht2005.cn.dormitoryspringboot.properties.JwtProperties;
@@ -139,5 +140,16 @@ public class AdministratorServiceImpl implements AdministratorService {
 	@Override
 	public List<Dormitory> listDormitoryByBuilding(Integer buildingId) {
 		return dormitoryMapper.selectByBuildingId(buildingId);
+	}
+
+	/**
+	 * 获取宿舍详情
+	 *
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public DormitoryVo getDormitoryById(Long id) {
+		return dormitoryMapper.selectDetailById(id);
 	}
 }

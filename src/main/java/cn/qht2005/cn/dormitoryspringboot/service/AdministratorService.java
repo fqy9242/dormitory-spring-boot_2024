@@ -6,6 +6,7 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.DormitoryArea;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
@@ -50,4 +51,11 @@ public interface AdministratorService {
 	 * @return
 	 */
 	List<Dormitory> listDormitoryByBuilding(Integer buildingId);
+
+	/**
+	 * 获取宿舍详情
+	 * @param id
+	 * @return
+	 */
+	DormitoryVo getDormitoryById(Long id);
 }

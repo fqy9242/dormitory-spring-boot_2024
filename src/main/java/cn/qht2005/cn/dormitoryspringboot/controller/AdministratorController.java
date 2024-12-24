@@ -6,6 +6,7 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.DormitoryArea;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
+import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
 import cn.qht2005.cn.dormitoryspringboot.service.AdministratorService;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
@@ -85,5 +86,14 @@ public class AdministratorController {
 		log.info("获取宿舍列表:{}", buildingId);
 		List<Dormitory> dormitoryList = administratorService.listDormitoryByBuilding(buildingId);
 		return Result.success(dormitoryList);
+	}
+	/**
+	 *  根据id获取宿舍
+	 */
+	@GetMapping("/getDormitoryById/{id}")
+	public Result<DormitoryVo> getDormitoryById(@PathVariable Long id) {
+		log.info("根据id获取宿舍:{}", id);
+		DormitoryVo dormitoryVo = administratorService.getDormitoryById(id);
+		return Result.success(dormitoryVo);
 	}
 }

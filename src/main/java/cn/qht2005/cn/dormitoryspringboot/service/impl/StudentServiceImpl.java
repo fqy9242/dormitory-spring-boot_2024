@@ -95,51 +95,68 @@ public class StudentServiceImpl implements StudentService {
 	public void insertChooseBed(ChooseBedDto chooseBedDto) {
 		// 生成床位号
 		String bedNumber = chooseBedDto.getDormitoryId() + "-" + chooseBedDto.getBedRange();
+
 		// 判断是否有人选
 		ChooseBed res = chooseBedMapper.selectByBedNumber(bedNumber);
 		if (res != null) {
-			// 有人选
 			throw new BaseException(MessageConstant.THIS_BED_IS_OCCUPIED);
 		}
+
 		// 获取学生信息
 		Student student = studentMapper.selectByStudentNumber(chooseBedDto.getStudentNumber());
+
 		// 获取分配表信息
 		PlanDormitory planDormitory = dormitoryMapper.selectPlanDormitoryByIdAndClassName(chooseBedDto.getDormitoryId(), student.getClassName());
-		// 判断该宿舍分配给该班级的名额是否已满
 		if (planDormitory.getPlanNumber() <= planDormitory.getChooseNumber()) {
-			// 该宿舍分配给该班级的名额已满
 			throw new BaseException(MessageConstant.DORMITORY_IS_FULL);
 		}
-		// 该学生原来选的宿舍名额释放1
-		String studentOldBedNumber = student.getBedNumber();
-		if (studentOldBedNumber != null) {
-			// 逻辑删除该学生原本选定的床位
-			chooseBedMapper.updateToDeleteByStudentNumber(chooseBedDto.getStudentNumber());
-			// 该学生原来选的宿舍名额释放1
-			PlanDormitory oldPlanDormitory = planDormitoryMapper.selectByClassNameAndDormitoryId(student.getClassName(), Long.parseLong(studentOldBedNumber.split("-")[0]));
-			oldPlanDormitory.setChooseNumber(oldPlanDormitory.getChooseNumber() - 1);
-			planDormitoryMapper.updateByEntry(oldPlanDormitory);
-		}
-		// 现在选的宿舍选的人数更新 + 1
-		PlanDormitory newPlanDormitory = planDormitoryMapper.selectByClassNameAndDormitoryId(student.getClassName(), chooseBedDto.getDormitoryId());
-		newPlanDormitory.setChooseNumber(newPlanDormitory.getChooseNumber() + 1);
-		planDormitoryMapper.updateByEntry(newPlanDormitory);
+
+		// 释放学生原来选的宿舍名额
+		releaseOldBed(student);
+
+		// 更新当前宿舍的选择人数
+		updatePlanDormitoryChooseNumber(student.getClassName(), chooseBedDto.getDormitoryId(), 1);
+
 		// 更新床位选择表
-		// 创建一个实体对象并赋值
 		ChooseBed chooseBed = new ChooseBed();
 		chooseBed.setBedNumber(bedNumber);
 		chooseBed.setStudentNumber(chooseBedDto.getStudentNumber());
 		chooseBed.setCreateTime(LocalDateTime.now());
 		chooseBed.setUpdateTime(LocalDateTime.now());
-		// 调用mapper插入数据
 		chooseBedMapper.insertChooseBed(chooseBed);
+
+		// 更新宿舍表/入住人数 + 1
+		dormitoryMapper.updateCheckInNumberPlus(chooseBedDto.getDormitoryId());
+
 		// 更新学生信息
-//		student = new Student();
 		student.setBedNumber(bedNumber);
-		student.setStudentNumber(chooseBedDto.getStudentNumber());
 		student.setUpdateTime(LocalDateTime.now());
 		studentMapper.updateByStudent(student);
-		// 更新床位分配表信息
+	}
+	/**
+	 * 释放学生原来选的宿舍名额
+	 * @param student
+	 */
+	private void releaseOldBed(Student student) {
+		String studentOldBedNumber = student.getBedNumber();
+		if (studentOldBedNumber != null) {
+			chooseBedMapper.updateToDeleteByStudentNumber(student.getStudentNumber());
+			PlanDormitory oldPlanDormitory = planDormitoryMapper.selectByClassNameAndDormitoryId(student.getClassName(), Long.parseLong(studentOldBedNumber.split("-")[0]));
+			oldPlanDormitory.setChooseNumber(oldPlanDormitory.getChooseNumber() - 1);
+			planDormitoryMapper.updateByEntry(oldPlanDormitory);
+			dormitoryMapper.updateCheckInNumberMinus(Long.parseLong(studentOldBedNumber.split("-")[0]));
+		}
+	}
+	/**
+	 * 更新宿舍选择人数
+	 * @param className
+	 * @param dormitoryId
+	 * @param increment
+	 */
+	private void updatePlanDormitoryChooseNumber(String className, Long dormitoryId, int increment) {
+		PlanDormitory planDormitory = planDormitoryMapper.selectByClassNameAndDormitoryId(className, dormitoryId);
+		planDormitory.setChooseNumber(planDormitory.getChooseNumber() + increment);
+		planDormitoryMapper.updateByEntry(planDormitory);
 	}
 
 	/**

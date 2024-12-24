@@ -1,7 +1,9 @@
 package cn.qht2005.cn.dormitoryspringboot.service;
 
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.GetBuildingByBuildingDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.DormitoryArea;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
@@ -38,7 +40,14 @@ public interface AdministratorService {
 	List<DormitoryArea> listDormitoryArea();
 
 	/**
-	 * 获取楼栋列表根据宿舍区域
+	 * 获取楼栋参数获取楼栋列表
 	 */
-	List<Building> listBuildingByArea(Integer areaId);
+	List<Building> listBuildingByBuilding(GetBuildingByBuildingDto buildingByBuildingDto);
+
+	/**
+	 * 获取宿舍列表根据楼栋
+	 * @param buildingId
+	 * @return
+	 */
+	List<Dormitory> listDormitoryByBuilding(Integer buildingId);
 }

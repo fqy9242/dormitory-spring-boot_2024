@@ -1,11 +1,12 @@
 package cn.qht2005.cn.dormitoryspringboot.controller;
 
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.GetBuildingByBuildingDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.DormitoryArea;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
-import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.service.AdministratorService;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.PageResult;
 import cn.qht2005.cn.dormitoryspringboot.utils.result.Result;
@@ -68,12 +69,21 @@ public class AdministratorController {
 	}
 
 	/**
-	 *  根据宿舍区域获取楼栋列表
+	 *  根据楼栋参数获取楼栋列表
 	 */
-	@GetMapping("/listBuildingByArea")
-	public Result<List<Building>> listBuildingByArea(Integer areaId) {
-		log.info("获取楼栋列表:{}", areaId);
-		List<Building> buildingList = administratorService.listBuildingByArea(areaId);
+	@PostMapping("/listBuildingByBuilding")
+	public Result<List<Building>> listBuildingByBuilding(@RequestBody GetBuildingByBuildingDto buildingByBuildingDto) {
+		log.info("获取楼栋列表:{}",buildingByBuildingDto);
+		List<Building> buildingList = administratorService.listBuildingByBuilding(buildingByBuildingDto);
 		return Result.success(buildingList);
+	}
+	/**
+	 *  根据楼栋获取宿舍列表
+	 */
+	@GetMapping("/listDormitoryByBuilding")
+	public Result<List<Dormitory>> listDormitoryByBuilding(Integer buildingId) {
+		log.info("获取宿舍列表:{}", buildingId);
+		List<Dormitory> dormitoryList = administratorService.listDormitoryByBuilding(buildingId);
+		return Result.success(dormitoryList);
 	}
 }

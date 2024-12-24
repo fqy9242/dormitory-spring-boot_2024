@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qht2005.cn.dormitoryspringboot.mapper.BuildingMapper">
+    <resultMap id="chooseBedResultMapper" type="cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building">
+        <result column="is_delete" property="delete" />
+    </resultMap>
+    <!--根据楼栋实体获取楼栋-->
+    <select id="selectByBuilding" resultType="cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building">
+        select * from building
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="buildingName != null and buildingName != ''">
+                and building_name = #{buildingName}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="areaName != null and areaName != ''">
+                and area_name = #{areaName}
+            </if>
+             <if test="areaId != null">
+                and area_name = (select area_name from dormitory_area where id = #{areaId})
+            </if>
+            <if test="floorDormitoryAmount != null">
+                and floor_dormitory_amount = #{floorDormitoryAmount}
+            </if>
+            <if test="floorAmount != null">
+                and floor_amount = #{floorAmount}
+            </if>
+            <if test="principalPhone != null and principalPhone != ''">
+                and principal_phone = #{principalPhone}
+            </if>
+            and is_delete = 0
+        </where>
+    </select>
+
+
+</mapper>

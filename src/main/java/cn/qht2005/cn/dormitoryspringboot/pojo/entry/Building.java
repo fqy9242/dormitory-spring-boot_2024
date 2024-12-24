@@ -14,11 +14,10 @@ public class Building {
 	private String buildingName;
 	private Integer type;
 	private String areaName;
-	private Integer floor_dormitory_amount;
-	private Integer floor_amount;
+	private Integer floorDormitoryAmount;
+	private Integer floorAmount;
 	private String principalPhone;
 	private LocalDateTime createTime;
 	private LocalDateTime updateTime;
 	private Integer delete;
-
 }

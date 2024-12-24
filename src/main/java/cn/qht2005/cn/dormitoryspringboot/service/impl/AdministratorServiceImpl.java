@@ -3,10 +3,12 @@ package cn.qht2005.cn.dormitoryspringboot.service.impl;
 import cn.qht2005.cn.dormitoryspringboot.constant.MessageConstant;
 import cn.qht2005.cn.dormitoryspringboot.exception.LoginFailException;
 import cn.qht2005.cn.dormitoryspringboot.mapper.*;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.GetBuildingByBuildingDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.PlanDormitoryDetailVo;
@@ -43,6 +45,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private AreaMapper AreaMapper;
 	@Autowired
 	private BuildingMapper buildingMapper;
+	@Autowired
+	private DormitoryMapper dormitoryMapper;
 	/**
 	 * 管理员登录
 	 *
@@ -119,10 +123,21 @@ public class AdministratorServiceImpl implements AdministratorService {
 	}
 
 	/**
-	 * 获取楼栋列表根据宿舍区域
+	 * 根据楼栋参数获取楼栋列表
 	 */
 	@Override
-	public List<Building> listBuildingByArea(Integer areaId) {
-		return buildingMapper.selectByAreaId(areaId);
+	public List<Building> listBuildingByBuilding(GetBuildingByBuildingDto buildingByBuildingDto) {
+		return buildingMapper.selectByBuilding(buildingByBuildingDto);
+	}
+
+	/**
+	 * 获取宿舍列表根据楼栋
+	 *
+	 * @param buildingId
+	 * @return
+	 */
+	@Override
+	public List<Dormitory> listDormitoryByBuilding(Integer buildingId) {
+		return dormitoryMapper.selectByBuildingId(buildingId);
 	}
 }

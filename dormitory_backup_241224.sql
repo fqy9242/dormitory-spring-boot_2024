@@ -11,7 +11,7 @@
  Target Server Version : 80034 (8.0.34)
  File Encoding         : 65001
 
- Date: 23/12/2024 20:44:51
+ Date: 24/12/2024 08:37:21
 */
 
 SET NAMES utf8mb4;
@@ -23,14 +23,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `administrator`;
 CREATE TABLE `administrator`  (
   `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL COMMENT '用户名',
-  `password` varchar(255) NOT NULL COMMENT '密码',
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密码',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_delete` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除 1是0否',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_admin_username`(`username` ASC) USING BTREE COMMENT '用户名'
-) ENGINE = InnoDB AUTO_INCREMENT = 2 COMMENT = '管理员';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '管理员';
 
 -- ----------------------------
 -- Records of administrator
@@ -45,24 +45,25 @@ COMMIT;
 DROP TABLE IF EXISTS `building`;
 CREATE TABLE `building`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `building_name` varchar(255) NOT NULL COMMENT '楼栋名称',
+  `building_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '楼栋名称',
   `type` tinyint NOT NULL COMMENT '楼栋类型 1.男生宿舍 2.女生宿舍 3.混合宿舍',
-  `area_name` varchar(255) NULL DEFAULT NULL COMMENT '区域名称 ',
+  `area_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '区域名称 ',
   `floor_dormitory_amount` tinyint UNSIGNED NULL DEFAULT NULL COMMENT '每层宿舍数量',
   `floor_amount` tinyint UNSIGNED NULL DEFAULT NULL COMMENT '层数',
-  `principal_phone` varchar(255) NULL DEFAULT NULL COMMENT '负责人电话',
+  `principal_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '负责人电话',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
+  `is_delete` tinyint UNSIGNED NULL DEFAULT 0 COMMENT '是否删除0否1是',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_principal_phone`(`principal_phone` ASC) USING BTREE COMMENT '负责人电话',
   INDEX `idx_building_name`(`building_name` ASC) USING BTREE COMMENT '楼栋名称'
-) ENGINE = InnoDB AUTO_INCREMENT = 39 COMMENT = '楼栋表';
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '楼栋表';
 
 -- ----------------------------
 -- Records of building
 -- ----------------------------
 BEGIN;
-INSERT INTO `building` (`id`, `building_name`, `type`, `area_name`, `floor_dormitory_amount`, `floor_amount`, `principal_phone`, `create_time`, `update_time`) VALUES (1, '1栋', 1, '东一区', 12, 6, '18888888888', '2024-12-11 15:27:29', '2024-12-11 15:27:31'), (2, '春风楼', 1, '豪华区', 10, 6, '19999999999', '2024-12-12 20:45:06', '2024-12-12 20:45:08'), (3, '1栋', 2, '新南区', 10, 6, '13333333333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (4, '2栋', 2, '新南区', 10, 6, '15555555555', '2024-12-22 20:11:22', '2024-12-22 20:11:27'), (5, '3栋', 2, '新南区', 10, 6, '13333322222', '2024-12-22 20:12:35', '2024-12-22 20:12:37'), (6, '4栋', 2, '新南区', 10, 6, '13222222222', '2024-12-22 20:13:12', '2024-12-22 20:13:14'), (7, '5栋', 2, '新南区', 10, 6, '15222222222', '2024-12-22 20:13:42', '2024-12-22 20:13:44'), (9, '2栋', 1, '东一区', 12, 6, '18888888887', '2024-12-22 20:20:29', '2024-12-22 20:20:31'), (10, '3栋', 1, '东一区', 12, 6, '13222211111', '2024-12-22 20:24:28', '2024-12-22 20:24:31'), (11, '4栋', 1, '东一区', 12, 6, '13211122111', '2024-12-22 20:24:53', '2024-12-22 20:24:55'), (12, '1栋', 1, '东二区', 10, 6, '13333331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (13, '2栋', 1, '东二区', 10, 6, '15552555555', '2024-12-22 20:11:22', '2024-12-22 20:11:27'), (15, '5栋', 1, '东二区', 10, 6, '152252212222', '2024-12-22 20:13:42', '2024-12-22 20:13:44'), (17, '3栋', 1, '东二区', 10, 6, '13133322222', '2024-12-22 20:12:35', '2024-12-22 20:12:37'), (18, '4栋', 1, '东二区', 10, 6, '13124222222', '2024-12-22 20:13:12', '2024-12-22 20:13:14'), (24, '1栋', 2, '西三区', 10, 6, '13333311533', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (25, '2栋', 2, '西三区', 10, 6, '13333331323', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (26, '3栋', 2, '西三区', 10, 6, '13333311323', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (27, '4栋', 2, '西三区', 10, 6, '13313331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (28, '5栋', 2, '西三区', 10, 6, '13113311333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (29, '1栋', 1, '南区', 10, 6, '13313311533', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (30, '2栋', 1, '南区', 10, 6, '13313331323', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (31, '3栋', 1, '南区', 10, 6, '13313311323', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (32, '4栋', 1, '南区', 10, 6, '13311331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (33, '5栋', 1, '南区', 10, 6, '13111311333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (34, '1栋', 2, '西一区', 10, 6, '15313311533', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (35, '2栋', 2, '西一区', 10, 6, '13513331323', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (36, '3栋', 2, '西一区', 10, 6, '13353311323', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (37, '4栋', 2, '西一区', 10, 6, '13351331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20'), (38, '5栋', 2, '西一区', 10, 6, '13151311333', '2024-12-21 11:04:18', '2024-12-21 11:04:20');
+INSERT INTO `building` (`id`, `building_name`, `type`, `area_name`, `floor_dormitory_amount`, `floor_amount`, `principal_phone`, `create_time`, `update_time`, `is_delete`) VALUES (1, '1栋', 1, '东一区', 12, 6, '18888888888', '2024-12-11 15:27:29', '2024-12-11 15:27:31', 0), (2, '春风楼', 1, '豪华区', 10, 6, '19999999999', '2024-12-12 20:45:06', '2024-12-12 20:45:08', 0), (3, '1栋', 2, '新南区', 10, 6, '13333333333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (4, '2栋', 2, '新南区', 10, 6, '15555555555', '2024-12-22 20:11:22', '2024-12-22 20:11:27', 0), (5, '3栋', 2, '新南区', 10, 6, '13333322222', '2024-12-22 20:12:35', '2024-12-22 20:12:37', 0), (6, '4栋', 2, '新南区', 10, 6, '13222222222', '2024-12-22 20:13:12', '2024-12-22 20:13:14', 0), (7, '5栋', 2, '新南区', 10, 6, '15222222222', '2024-12-22 20:13:42', '2024-12-22 20:13:44', 0), (9, '2栋', 1, '东一区', 12, 6, '18888888887', '2024-12-22 20:20:29', '2024-12-22 20:20:31', 0), (10, '3栋', 1, '东一区', 12, 6, '13222211111', '2024-12-22 20:24:28', '2024-12-22 20:24:31', 0), (11, '4栋', 1, '东一区', 12, 6, '13211122111', '2024-12-22 20:24:53', '2024-12-22 20:24:55', 0), (12, '1栋', 1, '东二区', 10, 6, '13333331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (13, '2栋', 1, '东二区', 10, 6, '15552555555', '2024-12-22 20:11:22', '2024-12-22 20:11:27', 0), (15, '5栋', 1, '东二区', 10, 6, '152252212222', '2024-12-22 20:13:42', '2024-12-22 20:13:44', 0), (17, '3栋', 1, '东二区', 10, 6, '13133322222', '2024-12-22 20:12:35', '2024-12-22 20:12:37', 0), (18, '4栋', 1, '东二区', 10, 6, '13124222222', '2024-12-22 20:13:12', '2024-12-22 20:13:14', 0), (24, '1栋', 2, '西三区', 10, 6, '13333311533', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (25, '2栋', 2, '西三区', 10, 6, '13333331323', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (26, '3栋', 2, '西三区', 10, 6, '13333311323', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (27, '4栋', 2, '西三区', 10, 6, '13313331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (28, '5栋', 2, '西三区', 10, 6, '13113311333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (29, '1栋', 1, '南区', 10, 6, '13313311533', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (30, '2栋', 1, '南区', 10, 6, '13313331323', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (31, '3栋', 1, '南区', 10, 6, '13313311323', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (32, '4栋', 1, '南区', 10, 6, '13311331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (33, '5栋', 1, '南区', 10, 6, '13111311333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (34, '1栋', 2, '西一区', 10, 6, '15313311533', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (35, '2栋', 2, '西一区', 10, 6, '13513331323', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (36, '3栋', 2, '西一区', 10, 6, '13353311323', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (37, '4栋', 2, '西一区', 10, 6, '13351331333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0), (38, '5栋', 2, '西一区', 10, 6, '13151311333', '2024-12-21 11:04:18', '2024-12-21 11:04:20', 0);
 COMMIT;
 
 -- ----------------------------
@@ -71,15 +72,15 @@ COMMIT;
 DROP TABLE IF EXISTS `choose_bed`;
 CREATE TABLE `choose_bed`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `student_number` char(13) NOT NULL COMMENT '学号',
-  `bed_number` varchar(255) NOT NULL COMMENT '床位号：生成规则 -> 宿舍id - 床位序号',
+  `student_number` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学号',
+  `bed_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '床位号：生成规则 -> 宿舍id - 床位序号',
   `create_time` datetime NOT NULL COMMENT '生成时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `is_delete` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除0否1是',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_choose_bed_student_number`(`student_number` ASC) USING BTREE,
   INDEX `uk_choose_bed_bed_number`(`bed_number` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 COMMENT = '学生选床位表';
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学生选床位表';
 
 -- ----------------------------
 -- Records of choose_bed
@@ -94,13 +95,13 @@ COMMIT;
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `class_name` varchar(255) NOT NULL COMMENT '班级名称',
-  `class_code` varchar(255) NULL DEFAULT NULL COMMENT '班级代码:专业代码+0+班级序列',
-  `college_name` varchar(255) NULL DEFAULT NULL COMMENT '学院名称',
+  `class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '班级名称',
+  `class_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '班级代码:专业代码+0+班级序列',
+  `college_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '学院名称',
   `grade` int UNSIGNED NOT NULL COMMENT '年级',
   `boy_amount` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '男生人数',
   `girl_amount` tinyint NOT NULL DEFAULT 0 COMMENT '女生人数',
-  `teacher_phone_number` varchar(255) NULL DEFAULT NULL COMMENT '辅导员电话号码',
+  `teacher_phone_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '辅导员电话号码',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除1是0否',
@@ -108,7 +109,7 @@ CREATE TABLE `class`  (
   UNIQUE INDEX `uk_class_name`(`class_name` ASC) USING BTREE,
   INDEX `idx_teacher_phone`(`teacher_phone_number` ASC) USING BTREE,
   INDEX `fk_college_name`(`college_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 COMMENT = '班级表';
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '班级表';
 
 -- ----------------------------
 -- Records of class
@@ -123,13 +124,13 @@ COMMIT;
 DROP TABLE IF EXISTS `college`;
 CREATE TABLE `college`  (
   `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `college_name` varchar(255) NOT NULL COMMENT '学院名称',
+  `college_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学院名称',
   `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除 0否1是',
   `create_time` datetime NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_college_name`(`college_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of college
@@ -144,7 +145,7 @@ COMMIT;
 DROP TABLE IF EXISTS `dormitory`;
 CREATE TABLE `dormitory`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `dormitory_number` varchar(255) NOT NULL COMMENT '宿舍号',
+  `dormitory_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '宿舍号',
   `building_id` int UNSIGNED NULL DEFAULT NULL COMMENT '楼栋id',
   `bed_amount` tinyint NOT NULL DEFAULT 0 COMMENT '床位数',
   `create_time` datetime NOT NULL,
@@ -153,7 +154,7 @@ CREATE TABLE `dormitory`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_dormitory_number_building`(`building_id` ASC, `dormitory_number` ASC) USING BTREE,
   INDEX `idx_dormitory_number`(`dormitory_number` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1849 COMMENT = '宿舍表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1849 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '宿舍表';
 
 -- ----------------------------
 -- Records of dormitory
@@ -170,13 +171,13 @@ COMMIT;
 DROP TABLE IF EXISTS `dormitory_area`;
 CREATE TABLE `dormitory_area`  (
   `Id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `area_name` varchar(255) NOT NULL COMMENT '区域名称',
+  `area_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '区域名称',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `is_delete` tinyint UNSIGNED NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`Id`) USING BTREE,
   UNIQUE INDEX `uk_area_name`(`area_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 COMMENT = '宿舍区域表';
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '宿舍区域表';
 
 -- ----------------------------
 -- Records of dormitory_area
@@ -191,13 +192,13 @@ COMMIT;
 DROP TABLE IF EXISTS `major`;
 CREATE TABLE `major`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `college_name` varchar(255) NULL DEFAULT NULL COMMENT '学院名称',
-  `major_name` varchar(255) NOT NULL COMMENT '专业名称',
-  `major_code` varchar(255) NOT NULL COMMENT '专业代码',
+  `college_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '学院名称',
+  `major_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '专业名称',
+  `major_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '专业代码',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_college_marjor_name`(`major_name` ASC) USING BTREE,
   INDEX `fk_college_name`(`college_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 117;
+) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of major
@@ -214,7 +215,7 @@ CREATE TABLE `plan_dormitory`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `dormitory_id` int UNSIGNED NOT NULL COMMENT '宿舍id',
   `dormitory_type` tinyint NOT NULL COMMENT '类型,1男2女',
-  `class_name` varchar(255) NOT NULL COMMENT '班级名称',
+  `class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '班级名称',
   `plan_number` tinyint UNSIGNED NOT NULL COMMENT '安排人数',
   `choose_number` tinyint UNSIGNED NOT NULL DEFAULT 0 COMMENT '已选择人数',
   `create_time` datetime NOT NULL,
@@ -222,7 +223,7 @@ CREATE TABLE `plan_dormitory`  (
   `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除 1是0否',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_plan_dormitory_class_name`(`class_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 COMMENT = '宿舍安排	';
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '宿舍安排	';
 
 -- ----------------------------
 -- Records of plan_dormitory
@@ -237,20 +238,20 @@ COMMIT;
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL COMMENT '姓名',
-  `student_number` char(13) NOT NULL COMMENT '学号',
-  `login_password` varchar(255) NOT NULL DEFAULT '123456' COMMENT '登录密码',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '姓名',
+  `student_number` char(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '学号',
+  `login_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '123456' COMMENT '登录密码',
   `gender` tinyint NOT NULL COMMENT '学生性别 1男2女',
-  `class_name` varchar(255) NULL DEFAULT NULL COMMENT '班级名称',
-  `bed_number` varchar(255) NULL DEFAULT NULL COMMENT '床位号',
-  `emergency_contact_phone` varchar(255) NULL DEFAULT NULL COMMENT '紧急联系人电话',
+  `class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '班级名称',
+  `bed_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '床位号',
+  `emergency_contact_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '紧急联系人电话',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `is_delete` tinyint UNSIGNED NULL DEFAULT 0 COMMENT '是否删除 1是0否',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_student_number`(`student_number` ASC) USING BTREE,
   INDEX `fk_class_name`(`class_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3789 COMMENT = '学生表';
+) ENGINE = InnoDB AUTO_INCREMENT = 3789 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '学生表';
 
 -- ----------------------------
 -- Records of student

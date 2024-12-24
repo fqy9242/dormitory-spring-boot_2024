@@ -1,10 +1,13 @@
 package cn.qht2005.cn.dormitoryspringboot.mapper;
 
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface DormitoryMapper {
@@ -24,4 +27,9 @@ public interface DormitoryMapper {
 	 */
 	@Select("select * from plan_dormitory where dormitory_id = #{dormitoryId} and class_name = #{className} and is_delete = 0")
 	PlanDormitory selectPlanDormitoryByIdAndClassName(Long dormitoryId, String className);
+	/**
+	 * 根据楼栋id查询宿舍
+	 */
+	@Select("select * from dormitory where building_id = #{buildingId} and is_delete = 0")
+	List<Dormitory> selectByBuildingId(Integer buildingId);
 }

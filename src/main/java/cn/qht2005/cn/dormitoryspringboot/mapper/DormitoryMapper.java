@@ -15,9 +15,14 @@ public interface DormitoryMapper {
 	/**
 	 *  根据id查询宿舍
 	 */
-	@Select("select dormitory.id,dormitory.check_in_number, dormitory.bed_amount, CONCAT(building.area_name, building.building_name, dormitory.dormitory_number) as dormitory_name, " +
-			"building.building_name, building.area_name, dormitory.bed_amount  from dormitory inner join building " +
-			"on dormitory.building_id = building.id where dormitory.id = #{id} and dormitory.is_delete = 0")
+	@Select("select dormitory.id, dormitory.check_in_number, dormitory.bed_amount, " +
+			"CONCAT(building.area_name, building.building_name, dormitory.dormitory_number) as dormitory_name, " +
+			"building.building_name, building.area_name, coalesce(sum(plan_dormitory.plan_number), 0) as total_plan_number " +
+			"from dormitory " +
+			"inner join building on dormitory.building_id = building.id " +
+			"LEFT JOIN plan_dormitory ON dormitory.id = plan_dormitory.dormitory_id AND plan_dormitory.is_delete = 0 " +
+			"where dormitory.id = #{id} and dormitory.is_delete = 0 " +
+			"group by dormitory_id")
 	DormitoryVo selectDetailById(Long id);
 
 	/**

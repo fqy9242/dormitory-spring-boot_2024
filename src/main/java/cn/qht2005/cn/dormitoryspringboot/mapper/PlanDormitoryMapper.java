@@ -38,4 +38,12 @@ public interface PlanDormitoryMapper {
 			"\tAND plan_dormitory.is_delete = 0 \n" +
 			"ORDER BY plan_dormitory.dormitory_type")
 	List<PlanDormitoryDetailVo> selectDetailByClassName(String className);
+
+/*	*//**
+	 * 根据宿舍id查询计划人数
+	 * @param dormitoryId
+	 * @return
+	 *//*
+	@Select("SELECT SUM(plan_number) as total_plan_number FROM plan_dormitory WHERE dormitory_id = #{dormitoryId} AND is_delete = 0")
+	Integer sumPlanNumberByDormitoryId(Long dormitoryId);*/
 }

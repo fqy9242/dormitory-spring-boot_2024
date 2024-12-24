@@ -18,6 +18,8 @@ public class DormitoryVo {
 	private String areaName;
 	// 床位数
 	private Integer bedAmount;
+	// 已分配人数
+	private Integer totalPlanNumber;
 	// 入住人数
 	private Integer checkInNumber;
 }

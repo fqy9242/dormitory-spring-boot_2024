@@ -1,6 +1,7 @@
 package cn.qht2005.cn.dormitoryspringboot.controller;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.GetBuildingByBuildingDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.InsertPlanDormitoryDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
@@ -95,5 +96,17 @@ public class AdministratorController {
 		log.info("根据id获取宿舍:{}", id);
 		DormitoryVo dormitoryVo = administratorService.getDormitoryById(id);
 		return Result.success(dormitoryVo);
+	}
+
+	/**
+	 *  分配宿舍
+	 * @param insertPlanDormitoryDto
+	 * @return
+	 */
+	@PostMapping("/planDormitory")
+	public Result planDormitory(@RequestBody InsertPlanDormitoryDto	insertPlanDormitoryDto) {
+		log.info("插入宿舍分配:{}", insertPlanDormitoryDto);
+		administratorService.insertPlanDormitory(insertPlanDormitoryDto);
+		return Result.success();
 	}
 }

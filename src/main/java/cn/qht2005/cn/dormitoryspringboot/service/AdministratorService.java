@@ -1,6 +1,7 @@
 package cn.qht2005.cn.dormitoryspringboot.service;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.GetBuildingByBuildingDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.InsertPlanDormitoryDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
@@ -58,4 +59,9 @@ public interface AdministratorService {
 	 * @return
 	 */
 	DormitoryVo getDormitoryById(Long id);
+	/**
+	 * 插入宿舍分配表
+	 * @param insertPlanDormitoryDto
+	 */
+	void insertPlanDormitory(InsertPlanDormitoryDto insertPlanDormitoryDto);
 }

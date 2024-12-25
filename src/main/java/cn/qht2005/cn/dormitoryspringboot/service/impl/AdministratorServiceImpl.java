@@ -1,14 +1,14 @@
 package cn.qht2005.cn.dormitoryspringboot.service.impl;
 
 import cn.qht2005.cn.dormitoryspringboot.constant.MessageConstant;
+import cn.qht2005.cn.dormitoryspringboot.exception.BaseException;
 import cn.qht2005.cn.dormitoryspringboot.exception.LoginFailException;
 import cn.qht2005.cn.dormitoryspringboot.mapper.*;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.GetBuildingByBuildingDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.InsertPlanDormitoryDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ListClassDto;
-import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Administrator;
-import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Building;
+import cn.qht2005.cn.dormitoryspringboot.pojo.entry.*;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Class;
-import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.AdministratorLoginVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.DormitoryVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetClassVo;
@@ -23,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,5 +152,28 @@ public class AdministratorServiceImpl implements AdministratorService {
 	@Override
 	public DormitoryVo getDormitoryById(Long id) {
 		return dormitoryMapper.selectDetailById(id);
+	}
+
+	/**
+	 * 插入宿舍分配表
+	 *
+	 * @param insertPlanDormitoryDto
+	 */
+	@Override
+	public void insertPlanDormitory(InsertPlanDormitoryDto insertPlanDormitoryDto) {
+		// 判断够不够名额
+		Integer totalAlreadyPlan = planDormitoryMapper.selectNotPlanBedNumberByDormitoryId(insertPlanDormitoryDto.getDormitoryId());
+		if (totalAlreadyPlan < insertPlanDormitoryDto.getPlanNumber()) {
+			throw new BaseException(MessageConstant.PLAN_NUMBER_TOO_LARGE);
+		}
+		// 创建一个PlanDormitory对象
+		PlanDormitory planDormitory = new PlanDormitory();
+		// 将DTO对象的属性值拷贝到PlanDormitory对象中
+		BeanUtils.copyProperties(insertPlanDormitoryDto, planDormitory);
+		planDormitory.setDormitoryId(Long.valueOf(insertPlanDormitoryDto.getDormitoryId()));
+		planDormitory.setCreateTime(LocalDateTime.now());
+		planDormitory.setUpdateTime(LocalDateTime.now());
+		// 调用Mapper的insert方法插入数据
+		planDormitoryMapper.insert(planDormitory);
 	}
 }

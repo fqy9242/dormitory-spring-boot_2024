@@ -39,7 +39,27 @@ public interface PlanDormitoryMapper {
 			"ORDER BY plan_dormitory.dormitory_type")
 	List<PlanDormitoryDetailVo> selectDetailByClassName(String className);
 
-/*	*//**
+	/**
+	 *  插入表
+	 * @param planDormitory
+	 */
+	@Select("insert into plan_dormitory (dormitory_id, dormitory_type, class_name, plan_number, create_time, update_time) " +
+			"values (#{dormitoryId}, #{dormitoryType}, #{className}, #{planNumber}, #{createTime}, #{updateTime}) ")
+	void insert(PlanDormitory planDormitory);
+
+	/**
+	 *  查询宿舍未分配床位数
+	 * @param dormitoryId
+	 * @return
+	 */
+	@Select("SELECT dormitory.bed_amount - COALESCE(SUM(plan_dormitory.plan_number),0) " +
+			"FROM dormitory " +
+			"LEFT JOIN plan_dormitory " +
+			"ON plan_dormitory.dormitory_id = dormitory.id AND plan_dormitory.is_delete = 0 " +
+			"WHERE dormitory.id = #{dormitoryId} AND dormitory.is_delete = 0")
+	Integer selectNotPlanBedNumberByDormitoryId(Integer dormitoryId);
+
+	/*	*//**
 	 * 根据宿舍id查询计划人数
 	 * @param dormitoryId
 	 * @return

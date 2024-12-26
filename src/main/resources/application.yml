@@ -13,6 +13,10 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  data:
+    redis:
+      host: localhost
+      port: 6379
 dormitory:
   jwt:
     # 设置jwt加密时所用的秘钥

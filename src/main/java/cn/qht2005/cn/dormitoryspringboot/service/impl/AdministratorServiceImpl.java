@@ -21,6 +21,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -49,6 +50,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 	private BuildingMapper buildingMapper;
 	@Autowired
 	private DormitoryMapper dormitoryMapper;
+	@Autowired
+	private RedisTemplate<String, Object> redisTemplate;
 	/**
 	 * 管理员登录
 	 *
@@ -175,5 +178,26 @@ public class AdministratorServiceImpl implements AdministratorService {
 		planDormitory.setUpdateTime(LocalDateTime.now());
 		// 调用Mapper的insert方法插入数据
 		planDormitoryMapper.insert(planDormitory);
+	}
+
+	/**
+	 * 设置选床位开放状态
+	 *
+	 * @param status
+	 */
+	@Override
+	public void setChooseBedStatus(Integer status) {
+		redisTemplate.opsForValue().set("chooseBedStatus", status);
+	}
+
+	/**
+	 * 获取可选床位是否开放选择状态
+	 *
+	 * @return
+	 */
+	@Override
+	public Integer getChooseBedStatus() {
+		Integer status = (Integer) redisTemplate.opsForValue().get("chooseBedStatus");
+		return status;
 	}
 }

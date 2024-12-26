@@ -64,4 +64,16 @@ public interface AdministratorService {
 	 * @param insertPlanDormitoryDto
 	 */
 	void insertPlanDormitory(InsertPlanDormitoryDto insertPlanDormitoryDto);
+
+	/**
+	 *  设置选床位开放状态
+	 * @param status
+	 */
+	void setChooseBedStatus(Integer status);
+
+	/**
+	 * 获取可选床位是否开放选择状态
+	 * @return
+	 */
+	Integer getChooseBedStatus();
 }

@@ -109,4 +109,22 @@ public class AdministratorController {
 		administratorService.insertPlanDormitory(insertPlanDormitoryDto);
 		return Result.success();
 	}
+	/**
+	 *  设置可选床位状态
+	 */
+	@PutMapping("/setChooseBedStatus/{status}")
+	public Result setChooseBedStatus(@PathVariable Integer status) {
+		log.info("设置可选床位状态:{}", status);
+		administratorService.setChooseBedStatus(status);
+		return Result.success();
+	}
+	/**
+	 *  获取可选床位状态
+	 */
+	@GetMapping("/getChooseBedStatus")
+	public Result<Integer> getChooseBedStatus() {
+		log.info("获取可选床位状态");
+		Integer status = administratorService.getChooseBedStatus();
+		return Result.success(status);
+	}
 }

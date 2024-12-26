@@ -13,6 +13,7 @@ import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Student;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.*;
 import cn.qht2005.cn.dormitoryspringboot.properties.JwtProperties;
+import cn.qht2005.cn.dormitoryspringboot.service.AdministratorService;
 import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
 import cn.qht2005.cn.dormitoryspringboot.utils.JwtUtil;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +39,8 @@ public class StudentServiceImpl implements StudentService {
 	private DormitoryMapper dormitoryMapper;
 	@Autowired
 	private ChooseBedMapper chooseBedMapper;
+	@Autowired
+	private AdministratorService administratorService;
 	/**
 	 * 学生登录
 	 */
@@ -93,6 +96,11 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	@Transactional
 	public void insertChooseBed(ChooseBedDto chooseBedDto) {
+		// 判断现在是否可以选床位
+		Integer chooseBedStatus = administratorService.getChooseBedStatus();
+		if (chooseBedStatus == 0) {
+			throw new BaseException(MessageConstant.CAN_NOT_CHOOSE_BED);
+		}
 		// 生成床位号
 		String bedNumber = chooseBedDto.getDormitoryId() + "-" + chooseBedDto.getBedRange();
 

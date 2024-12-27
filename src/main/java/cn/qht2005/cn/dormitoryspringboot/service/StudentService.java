@@ -1,6 +1,7 @@
 package cn.qht2005.cn.dormitoryspringboot.service;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.StudentUpdatePasswordDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetOccupiedBedVo;
@@ -45,4 +46,10 @@ public interface StudentService {
 	 * @return
 	 */
 	List<GetOccupiedBedVo> getOccupiedBed(List<Long> dormitoryIds);
+
+	/**
+	 * 修改登录密码
+	 * @param studentUpdatePasswordDto
+	 */
+	void updateLoginPassword(StudentUpdatePasswordDto studentUpdatePasswordDto);
 }

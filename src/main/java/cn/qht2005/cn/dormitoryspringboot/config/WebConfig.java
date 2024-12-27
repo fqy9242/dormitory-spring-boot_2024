@@ -16,6 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 设置不登陆也不会拦截的接口
 		registry.addInterceptor(jwtTokenAdminInterceptor).excludePathPatterns("/**/*login*"
-		);
+		).excludePathPatterns("/**/*updateLoginPassword*");
 	}
 }

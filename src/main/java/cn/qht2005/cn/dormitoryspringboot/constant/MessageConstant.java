@@ -7,4 +7,6 @@ public class MessageConstant {
 	public static final String DORMITORY_IS_FULL = "本班级的该宿舍名额已满!";
 	public static final String PLAN_NUMBER_TOO_LARGE = "该宿舍名额不足!";
 	public static final String CAN_NOT_CHOOSE_BED = "现在不是选床位时间!";
+	public static final String PLEASE_MODIFY_PASSWORD = "请修改密码!";
+	public static final String OLD_PASSWORD_ERROR = "原密码错误!";
 }

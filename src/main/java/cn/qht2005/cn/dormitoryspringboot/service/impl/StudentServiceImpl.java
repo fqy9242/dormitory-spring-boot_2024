@@ -7,6 +7,7 @@ import cn.qht2005.cn.dormitoryspringboot.mapper.DormitoryMapper;
 import cn.qht2005.cn.dormitoryspringboot.mapper.PlanDormitoryMapper;
 import cn.qht2005.cn.dormitoryspringboot.mapper.StudentMapper;
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.StudentUpdatePasswordDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.Dormitory;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.PlanDormitory;
@@ -18,6 +19,7 @@ import cn.qht2005.cn.dormitoryspringboot.service.StudentService;
 import cn.qht2005.cn.dormitoryspringboot.utils.JwtUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,12 +43,17 @@ public class StudentServiceImpl implements StudentService {
 	private ChooseBedMapper chooseBedMapper;
 	@Autowired
 	private AdministratorService administratorService;
+	@Value("${dormitory.origin-password}")
+	private String originPassword;
 	/**
 	 * 学生登录
 	 */
 	@Override
 	public StudentLoginVo login(String studentNumber, String password) {
-		// TODO 判断该学生的账号是否为默认密码 如果是 则让其修改密码
+		// 判断该学生的账号是否为默认密码 如果是 则让其修改密码
+		if (password.equals(originPassword)) {
+			throw new LoginFailException(MessageConstant.PLEASE_MODIFY_PASSWORD);
+		}
 		Student student = studentMapper.selectByStudentNumberAndPassword(studentNumber, password);
 		if (student == null) {
 			// 根据学号跟密码查询不到学生信息
@@ -233,4 +240,21 @@ public class StudentServiceImpl implements StudentService {
 		return occupiedBedVos;
 	}
 
+	/**
+	 * 修改登录密码
+	 *
+	 * @param studentUpdatePasswordDto
+	 */
+	@Override
+	public void updateLoginPassword(StudentUpdatePasswordDto studentUpdatePasswordDto) {
+		// 判断原密码是否正确
+		Student student = studentMapper.selectByStudentNumberAndPassword(studentUpdatePasswordDto.getStudentNumber(), studentUpdatePasswordDto.getOldPassword());
+		if (student == null) {
+			throw new BaseException(MessageConstant.OLD_PASSWORD_ERROR);
+		}
+		// 修改密码
+		student.setLoginPassword(studentUpdatePasswordDto.getNewPassword());
+		student.setUpdateTime(LocalDateTime.now());
+		studentMapper.updateByStudent(student);
+	}
 }

@@ -1,6 +1,7 @@
 package cn.qht2005.cn.dormitoryspringboot.controller;
 
 import cn.qht2005.cn.dormitoryspringboot.pojo.dto.ChooseBedDto;
+import cn.qht2005.cn.dormitoryspringboot.pojo.dto.StudentUpdatePasswordDto;
 import cn.qht2005.cn.dormitoryspringboot.pojo.entry.ChooseBed;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetAlreadyChooseBedVo;
 import cn.qht2005.cn.dormitoryspringboot.pojo.vo.GetOccupiedBedVo;
@@ -63,6 +64,15 @@ public class StudentController {
 		log.info("获取宿舍已被占用位,{}", dormitoryIds);
 		List<GetOccupiedBedVo> bedRanges = studentService.getOccupiedBed(dormitoryIds);
 		return Result.success(bedRanges);
+	}
+	/**
+	 * 学生修改登录密码
+	 */
+	@PostMapping("/updateLoginPassword")
+	public Result updateLoginPassword(@RequestBody StudentUpdatePasswordDto studentUpdatePasswordDto) {
+		log.info("学生修改登录密码,{}", studentUpdatePasswordDto);
+		studentService.updateLoginPassword(studentUpdatePasswordDto);
+		return Result.success();
 	}
 
 }

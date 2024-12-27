@@ -50,14 +50,14 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public StudentLoginVo login(String studentNumber, String password) {
-		// 判断该学生的账号是否为默认密码 如果是 则让其修改密码
-		if (password.equals(originPassword)) {
-			throw new LoginFailException(MessageConstant.PLEASE_MODIFY_PASSWORD);
-		}
 		Student student = studentMapper.selectByStudentNumberAndPassword(studentNumber, password);
 		if (student == null) {
 			// 根据学号跟密码查询不到学生信息
 			throw new LoginFailException(MessageConstant.STUDENTNUMBER_OR_PASSWORD_ERROR);
+		}
+		// 判断该学生的账号是否为默认密码 如果是 则让其修改密码
+		if (password.equals(originPassword)) {
+			throw new LoginFailException(MessageConstant.PLEASE_MODIFY_PASSWORD);
 		}
 		StudentLoginVo studentLoginVo = new StudentLoginVo();
 		// 将学生信息封装到StudentLoginVo中

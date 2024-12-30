@@ -6,6 +6,8 @@ import lombok.Data;
 public class PlanDormitoryVo {
 	// 主键
 	private Long id;
+	// 宿舍id
+	private Long dormitoryId;
 	// 宿舍名称
 	private String dormitoryName;
 	// 宿舍类型(男/女)
